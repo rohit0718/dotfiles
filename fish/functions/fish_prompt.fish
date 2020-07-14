@@ -1,33 +1,28 @@
-function fish_prompt --description 'Write out the prompt'
-    set -l last_status $status
+function fish_prompt
+	set_color red --bold
+	printf "["
+	set_color yellow
+	printf "%s" "$USER"
+	set_color green
+	printf "@"
+	set_color blue
+	printf "%s" "$hostname "
+	set_color magenta
+	printf (prompt_pwd)
+	set_color red
+	printf "] "
+	set_color normal
+end
 
-    # User
-    set_color $fish_color_user
-    echo -n $USER
-    set_color normal
-
-    echo -n '@'
-
-    # Host
-    set_color $fish_color_host
-    echo -n (prompt_hostname)
-    set_color normal
-
-    echo -n ':'
-
-    # PWD
-    set_color $fish_color_cwd
-    echo -n (prompt_pwd)
-    set_color normal
-
-    __terlar_git_prompt
-    fish_hg_prompt
-    echo
-
-    if not test $last_status -eq 0
-        set_color $fish_color_error
+# two level pwd_prompt
+function prompt_pwd
+    if test (basename (dirname "$PWD")) = "/"
+	printf $PWD
+    else if test (basename (dirname "$PWD")) = "$USER"
+	printf "~"/(basename $PWD)
+    else if test "$PWD" != "$HOME"
+	printf (basename (dirname "$PWD"))/(basename "$PWD")
+    else
+        printf "~"
     end
-
-    echo -n '➤ '
-    set_color normal
 end
