@@ -1,6 +1,6 @@
-#############
-#   zshrc   #
-#############
+#
+# ~/.zshrc
+#
 # dependencies: LS_COLORS, tabtab, zsh-nvm, zsh-syntax-highlighting, zsh-autosuggestions
 
 # Using vim instead of vi as the editor
